@@ -1,5 +1,6 @@
 package br.com.alura.screenmatchspring;
 
+import br.com.alura.screenmatchspring.model.EpisodeData;
 import br.com.alura.screenmatchspring.model.SerieData;
 import br.com.alura.screenmatchspring.service.ApiConsumer;
 import br.com.alura.screenmatchspring.service.DataConverter;
@@ -20,12 +21,17 @@ public class ScreenmatchSpringApplication implements CommandLineRunner {
 		String apiKey = "d8270438";
 		String titleName = "gilmore girls";
 		String season = "1";
+		String episode = "2";
 		String address = baseUrl + "?t=" + titleName.replace(" ", "+") + "&apikey=" + apiKey;
 
 		var response = ApiConsumer.getData(address);
 		var converter = new DataConverter();
 		SerieData serieData = converter.getData(response.body(), SerieData.class);
-
 		System.out.println(serieData);
+
+		address = baseUrl + "?t=" + titleName.replace(" ", "+") + "&apikey=" + apiKey + "&Season=" + season + "&Episode=" + episode;
+		response = ApiConsumer.getData(address);
+		EpisodeData episodeData = converter.getData(response.body(), EpisodeData.class);
+		System.out.println(episodeData);
 	}
 }
